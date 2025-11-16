@@ -9420,7 +9420,7 @@ select::-ms-expand {
 /* This trick is done to add some spacing in case the prices fall into two lines */
 .product-item__price-list {
   margin-top: -15px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .product-item__price-list .price {

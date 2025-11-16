@@ -234,7 +234,7 @@ F
         {{ price_list }}
       {%- endif -%}
       
-      <p style="margin: -20px 0px 0px 0px; font-size: 14px;">ou <b>12x</b> de <b>{{- product.price | divided_by: 12 | times: 1.2161 | money -}}</b></p>
+      <p style="margin: 2px 0 0 0; font-size: 14px;">ou <b>12x</b> de <b>{{- product.price | divided_by: 12 | times: 1.2161 | money -}}</b></p>
 
         {%- if settings.mostrar_fretegratis1 -%}
       
@@ -244,7 +244,7 @@ F
       
       {%- endif -%}
       
-      <div>
+      <div style="margin: 2px 0;">
             <!-- Start Areviews Collection Rating Code -->
       {%- if template.name == 'product' and template != 'product.quick-view' -%} 
       <div class='areviews_header_stars'></div> 
