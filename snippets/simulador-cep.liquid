@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Exemplo de uso: const SENDER_ZIP = '01001-000';
     // Quando precisar mudar o CEP do remetente, ALTERE APENAS ESTA LINHA.
     // ======================================================================
-    const SENDER_ZIP = '35520-560';
+    const SENDER_ZIP = '01001-000';
     const SENDER_ZIP_UNMASKED = SENDER_ZIP.replace(/\D/g, '');
 
     window.generateShippingRates = async (btn) => {
@@ -115,6 +115,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         let formattedLocation = '';
         let provinceName = '';
+        let destUfCode = '';
+        let destCity = '';
         try {
             const response = await fetch(viaCepUrl);
             if (response.ok) {
@@ -122,10 +124,28 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (!data.erro) {
                     formattedLocation = formatLocation(data);
                     provinceName = mapBrazilProvince(data.uf);
+                    destUfCode = data.uf || '';
+                    destCity = data.localidade || '';
                 }
             }
         } catch (error) {
             // Ignorar falhas de localização para não bloquear cálculo de frete
+        }
+
+        // Buscar dados do CEP do remetente para estimativa de prazo baseada na origem
+        let originUfCode = '';
+        let originCity = '';
+        try {
+            const originResponse = await fetch(`https://viacep.com.br/ws/${SENDER_ZIP_UNMASKED}/json/`);
+            if (originResponse.ok) {
+                const originData = await originResponse.json();
+                if (!originData.erro) {
+                    originUfCode = originData.uf || '';
+                    originCity = originData.localidade || '';
+                }
+            }
+        } catch (error) {
+            // Ignorar falhas na origem; se não disponível, seguimos sem estimativa customizada
         }
 
         if (formattedLocation) {
@@ -153,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             await addTemporaryProduct();
 
-            await calculateShippingRates(cepUnmasked, country, province, wrapper);
+            await calculateShippingRates(cepUnmasked, country, province, wrapper, { originUfCode, destUfCode, originCity, destCity });
 
             await fetch('/cart/clear.js', { method: 'POST' });
 
@@ -169,7 +189,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             await addTemporaryProduct();
 
-            await calculateShippingRates(cepUnmasked, country, province, wrapper);
+            await calculateShippingRates(cepUnmasked, country, province, wrapper, { originUfCode, destUfCode, originCity, destCity });
 
             await fetch('/cart/clear.js', { method: 'POST' });
         }
@@ -210,7 +230,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-    async function calculateShippingRates(cepUnmasked, country, province, wrapper) {
+    async function calculateShippingRates(cepUnmasked, country, province, wrapper, originDestMeta = {}) {
       // Incluir província (estado) para evitar 422 e mensagens de validação do Shopify
       const params = new URLSearchParams();
       params.set('shipping_address[zip]', cepUnmasked);
@@ -226,10 +246,12 @@ document.addEventListener('DOMContentLoaded', function () {
       if (ratesResponse.ok && Array.isArray(ratesData.shipping_rates) && ratesData.shipping_rates.length > 0) {
         let ratesHtml = '';
         ratesData.shipping_rates.forEach(rate => {
-          const deliveryDays =
+          const shopifyDays =
             rate.delivery_days && rate.delivery_days.length > 0
               ? formatDeliveryDays(rate.delivery_days)
-              : 'Prazo não informado';
+              : '';
+          const estimatedDays = estimateDeliveryDaysByOriginDest(originDestMeta);
+          const deliveryDays = shopifyDays || estimatedDays || 'Prazo não informado';
           // Exibir nome do serviço e apenas o prazo de entrega (sem preço)
           ratesHtml += `<div><strong>${rate.name}</strong> ${deliveryDays}</div>`;
         });
@@ -258,6 +280,51 @@ document.addEventListener('DOMContentLoaded', function () {
       return lastDay === 1
         ? '1 dia útil'
         : `${lastDay} dias úteis`;
+    }
+
+    function estimateDeliveryDaysByOriginDest(meta) {
+      const { originUfCode, destUfCode, originCity, destCity } = meta || {};
+      if (!originUfCode || !destUfCode) return '';
+
+      const norm = s => (s || '').toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '');
+
+      // Mesma cidade: prazo mais curto
+      if (originUfCode === destUfCode && originCity && destCity && norm(originCity) === norm(destCity)) {
+        return '1-2 dias úteis';
+      }
+
+      // Mapa de regiões do IBGE
+      const regionByUf = {
+        AC: 'Norte', AL: 'Nordeste', AP: 'Norte', AM: 'Norte', BA: 'Nordeste', CE: 'Nordeste', DF: 'Centro-Oeste',
+        ES: 'Sudeste', GO: 'Centro-Oeste', MA: 'Nordeste', MT: 'Centro-Oeste', MS: 'Centro-Oeste', MG: 'Sudeste',
+        PA: 'Norte', PB: 'Nordeste', PR: 'Sul', PE: 'Nordeste', PI: 'Nordeste', RJ: 'Sudeste', RN: 'Nordeste',
+        RS: 'Sul', RO: 'Norte', RR: 'Norte', SC: 'Sul', SP: 'Sudeste', SE: 'Nordeste', TO: 'Norte'
+      };
+
+      const originRegion = regionByUf[originUfCode];
+      const destRegion = regionByUf[destUfCode];
+
+      if (!originRegion || !destRegion) return '3-7 dias úteis';
+
+      if (originUfCode === destUfCode) {
+        return '2-3 dias úteis';
+      }
+
+      if (originRegion === destRegion) {
+        return '3-5 dias úteis';
+      }
+
+      const neighboring = new Set([
+        'Sudeste-Sul','Sul-Sudeste', 'Sudeste-Centro-Oeste','Centro-Oeste-Sudeste',
+        'Nordeste-Centro-Oeste','Centro-Oeste-Nordeste', 'Norte-Nordeste','Nordeste-Norte'
+      ]);
+      const key = `${originRegion}-${destRegion}`;
+
+      if (neighboring.has(key)) {
+        return '5-8 dias úteis';
+      }
+
+      return '7-12 dias úteis';
     }
 
     function mapBrazilProvince(uf) {
