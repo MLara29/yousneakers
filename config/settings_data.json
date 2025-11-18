@@ -490,9 +490,9 @@
       "static-recently-viewed-products": {
         "type": "static-recently-viewed-products",
         "settings": {
-          "show_section": false,
+          "show_section": true,
           "title": "Produtos que você viu recentemente",
-          "show_quick_buy": false
+          "show_quick_buy": true
         }
       },
       "cart-template": {
