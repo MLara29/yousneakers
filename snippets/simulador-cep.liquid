@@ -99,7 +99,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     async function tryCalculateShippingRates(btn, wrapper, cepUnmasked) {
-        const country = 'BR';
+        // Shopify espera o nome completo do país. Para Brasil, use "Brazil".
+        const country = 'Brazil';
         const brasilApiUrl = `https://brasilapi.com.br/api/cep/v1/${cepUnmasked}`;
 
         let data;
@@ -125,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
           <p class="td-frete-dinamico-location"><strong>${formattedLocation}</strong></p>
         `;
 
-        const province = data.state;
+        const province = data.state; // Mantido apenas para exibição; não será enviado no cálculo
 
 
         const cartResponse = await fetch('/cart.js', { method: 'GET' });
@@ -185,21 +186,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     async function calculateShippingRates(cepUnmasked, country, province, wrapper) {
-      const ratesUrl = `/cart/shipping_rates.json?shipping_address[zip]=${cepUnmasked}&shipping_address[country]=${country}&shipping_address[province]=${province}`;
+      // O endpoint funciona com CEP e país. Remover a província evita incompatibilidades de formato.
+      const ratesUrl = `/cart/shipping_rates.json?shipping_address[zip]=${cepUnmasked}&shipping_address[country]=${country}`;
 
       const ratesResponse = await fetch(ratesUrl, { method: 'GET' });
       const ratesData = await ratesResponse.json();
 
-      if (ratesResponse.ok && ratesData.shipping_rates.length > 0) {
+      if (ratesResponse.ok && Array.isArray(ratesData.shipping_rates) && ratesData.shipping_rates.length > 0) {
         let ratesHtml = '';
         ratesData.shipping_rates.forEach(rate => {
-          const formattedPrice =
-            rate.price === 0 ? 'Grátis' : formatCurrency(rate.price);
           const deliveryDays =
             rate.delivery_days && rate.delivery_days.length > 0
               ? formatDeliveryDays(rate.delivery_days)
-              : '';
-          ratesHtml += `<div><strong>- ${rate.name}</strong>: ${formattedPrice} ${deliveryDays}</div>`;
+              : 'Prazo não informado';
+          // Exibir nome do serviço e apenas o prazo de entrega (sem preço)
+          ratesHtml += `<div><strong>${rate.name}</strong> ${deliveryDays}</div>`;
         });
         wrapper.querySelector('#frete-sucesso').innerHTML += `${ratesHtml}`;
         wrapper.querySelector('#frete-sucesso').removeAttribute('hidden');
@@ -220,8 +221,8 @@ document.addEventListener('DOMContentLoaded', function () {
     function formatDeliveryDays(deliveryDays) {
       const lastDay = deliveryDays[deliveryDays.length - 1];
       return lastDay === 1
-        ? '- 1 dia útil'
-        : `- ${lastDay} dias úteis`;
+        ? '1 dia útil'
+        : `${lastDay} dias úteis`;
     }
 
 
