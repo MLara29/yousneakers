@@ -101,32 +101,29 @@ document.addEventListener('DOMContentLoaded', function () {
     async function tryCalculateShippingRates(btn, wrapper, cepUnmasked) {
         // Shopify espera o nome completo do país. Para Brasil, use "Brazil".
         const country = 'Brazil';
-        const brasilApiUrl = `https://brasilapi.com.br/api/cep/v1/${cepUnmasked}`;
+        // Usar ViaCEP (CORS liberado) para obter a localização; se falhar, seguimos sem bloquear o cálculo.
+        const viaCepUrl = `https://viacep.com.br/ws/${cepUnmasked}/json/`;
 
-        let data;
+        let formattedLocation = '';
         try {
-            const response = await fetch(brasilApiUrl);
-
+            const response = await fetch(viaCepUrl);
             if (response.ok) {
-                data = await response.json();
-            } else {
-                throw new Error("Erro ao buscar CEP na BrasilAPI");
+                const data = await response.json();
+                if (!data.erro) {
+                    formattedLocation = formatLocation(data);
+                }
             }
         } catch (error) {
-            wrapper.querySelector('#frete-aviso').innerHTML = `
-              <p class="mb-0">CEP não encontrado.</p>
-            `;
-            wrapper.querySelector('#frete-aviso').removeAttribute('hidden');
-            btn.innerHTML = btn.dataset.text;
-            return;
+            // Ignorar falhas de localização para não bloquear cálculo de frete
         }
 
-        const formattedLocation = formatLocation(data);
-        wrapper.querySelector('#frete-sucesso').innerHTML = `
-          <p class="td-frete-dinamico-location"><strong>${formattedLocation}</strong></p>
-        `;
+        if (formattedLocation) {
+          wrapper.querySelector('#frete-sucesso').innerHTML = `
+            <p class="td-frete-dinamico-location"><strong>${formattedLocation}</strong></p>
+          `;
+        }
 
-        const province = data.state; // Mantido apenas para exibição; não será enviado no cálculo
+        const province = '';
 
 
         const cartResponse = await fetch('/cart.js', { method: 'GET' });
@@ -214,7 +211,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     function formatLocation(data) {
-      return `${data.city} - ${data.neighborhood} - ${data.street}`;
+      // Compatível com ViaCEP e BrasilAPI
+      const city = data.localidade || data.city || '';
+      const neighborhood = data.bairro || data.neighborhood || '';
+      const street = data.logradouro || data.street || '';
+      return [city, neighborhood, street].filter(Boolean).join(' - ');
     }
 
 
