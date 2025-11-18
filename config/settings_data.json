@@ -51,7 +51,7 @@
     "show_secondary_image": false,
     "show_discount": true,
     "discount_mode": "percentage",
-    "product_price_position": "after_title",
+    "product_price_position": "before_title",
     "product_image_size": "square",
     "show_color_swatch": true,
     "show_inventory_quantity": false,
