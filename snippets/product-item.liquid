@@ -245,15 +245,11 @@ F
       {%- endif -%}
       
       <div style="margin: 2px 0;">
-            <!-- Start Areviews Collection Rating Code -->
-      {%- if template.name == 'product' and template != 'product.quick-view' -%} 
-      <div class='areviews_header_stars'></div> 
-      {% else %}
-      <div class='areviews_product_item areviews_stars{{ product.id }}'  data-product-id='{{ product.id }}'></div>
-      {% endif %}
-      <!-- End Areviews Collection Rating Code -->
+      {%- if template.name == 'product' and template != 'product.quick-view' -%}
+      <div class='areviews_header_stars'></div>
+      {%- endif -%}
       
-      {%- if settings.show_reviews_badge -%}
+      {%- if template.name == 'product' and settings.show_reviews_badge -%}
         <a class="product-item__reviews-badge link" href="{{ product.url | within: collection }}#product-reviews">
           <span class="shopify-product-reviews-badge" data-id="{{ product.id }}">
             {%- comment -%}Display a placeholder, to allocate space{%- endcomment -%}
