@@ -105,12 +105,14 @@ document.addEventListener('DOMContentLoaded', function () {
         const viaCepUrl = `https://viacep.com.br/ws/${cepUnmasked}/json/`;
 
         let formattedLocation = '';
+        let provinceName = '';
         try {
             const response = await fetch(viaCepUrl);
             if (response.ok) {
                 const data = await response.json();
                 if (!data.erro) {
                     formattedLocation = formatLocation(data);
+                    provinceName = mapBrazilProvince(data.uf);
                 }
             }
         } catch (error) {
@@ -123,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
           `;
         }
 
-        const province = '';
+        const province = provinceName;
 
 
         const cartResponse = await fetch('/cart.js', { method: 'GET' });
@@ -169,11 +171,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
     async function addTemporaryProduct() {
       const formElement = document.querySelector('form[action*="/cart/add"]');
-      const formData = getFormData(formElement);
+      if (!formElement) {
+        throw new Error('Formulário de produto não encontrado');
+      }
+
+      const idInput = formElement.querySelector('input[name="id"], select[name="id"]');
+      const variantId = idInput && idInput.value ? idInput.value : null;
+      if (!variantId) {
+        throw new Error('ID da variante não encontrado no formulário');
+      }
+
+      const payload = {
+        items: [
+          {
+            id: Number(variantId),
+            quantity: 1,
+          },
+        ],
+      };
 
       await fetch('/cart/add.js', {
         method: 'POST',
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
         headers: {
           'Content-Type': 'application/json',
           'X-Requested-With': 'XMLHttpRequest',
@@ -183,8 +202,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     async function calculateShippingRates(cepUnmasked, country, province, wrapper) {
-      // O endpoint funciona com CEP e país. Remover a província evita incompatibilidades de formato.
-      const ratesUrl = `/cart/shipping_rates.json?shipping_address[zip]=${cepUnmasked}&shipping_address[country]=${country}`;
+      // Incluir província (estado) para evitar 422 e mensagens de validação do Shopify
+      const params = new URLSearchParams();
+      params.set('shipping_address[zip]', cepUnmasked);
+      params.set('shipping_address[country]', country);
+      if (province) {
+        params.set('shipping_address[province]', province);
+      }
+      const ratesUrl = `/cart/shipping_rates.json?${params.toString()}`;
 
       const ratesResponse = await fetch(ratesUrl, { method: 'GET' });
       const ratesData = await ratesResponse.json();
@@ -224,6 +249,39 @@ document.addEventListener('DOMContentLoaded', function () {
       return lastDay === 1
         ? '1 dia útil'
         : `${lastDay} dias úteis`;
+    }
+
+    function mapBrazilProvince(uf) {
+      const mapping = {
+        AC: 'Acre',
+        AL: 'Alagoas',
+        AP: 'Amapá',
+        AM: 'Amazonas',
+        BA: 'Bahia',
+        CE: 'Ceará',
+        DF: 'Distrito Federal',
+        ES: 'Espírito Santo',
+        GO: 'Goiás',
+        MA: 'Maranhão',
+        MT: 'Mato Grosso',
+        MS: 'Mato Grosso do Sul',
+        MG: 'Minas Gerais',
+        PA: 'Pará',
+        PB: 'Paraíba',
+        PR: 'Paraná',
+        PE: 'Pernambuco',
+        PI: 'Piauí',
+        RJ: 'Rio de Janeiro',
+        RN: 'Rio Grande do Norte',
+        RS: 'Rio Grande do Sul',
+        RO: 'Rondônia',
+        RR: 'Roraima',
+        SC: 'Santa Catarina',
+        SP: 'São Paulo',
+        SE: 'Sergipe',
+        TO: 'Tocantins',
+      };
+      return mapping[uf] || '';
     }
 
 
