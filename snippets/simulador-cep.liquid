@@ -193,8 +193,8 @@ document.addEventListener('DOMContentLoaded', function () {
       if (ratesResponse.ok && ratesData.shipping_rates.length > 0) {
         let ratesHtml = '';
         ratesData.shipping_rates.forEach(rate => {
-         // const formattedPrice =
-         //   rate.price === 0 ? 'Grátis' : formatCurrency(rate.price);
+          const formattedPrice =
+            rate.price === 0 ? 'Grátis' : formatCurrency(rate.price);
           const deliveryDays =
             rate.delivery_days && rate.delivery_days.length > 0
               ? formatDeliveryDays(rate.delivery_days)
