@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Exemplo de uso: const SENDER_ZIP = '01001-000';
     // Quando precisar mudar o CEP do remetente, ALTERE APENAS ESTA LINHA.
     // ======================================================================
-    const SENDER_ZIP = '35520-560';
+    const SENDER_ZIP = '01001-000';
     const SENDER_ZIP_UNMASKED = SENDER_ZIP.replace(/\D/g, '');
 
     window.generateShippingRates = async (btn) => {
@@ -148,6 +148,10 @@ document.addEventListener('DOMContentLoaded', function () {
             // Ignorar falhas na origem; se não disponível, seguimos sem estimativa customizada
         }
 
+        // Logs informativos no console sobre a origem e destino
+        console.log('[Frete Dinâmico] CEP remetente (origem):', SENDER_ZIP, `(unmasked: ${SENDER_ZIP_UNMASKED})`, '| UF:', originUfCode, '| Cidade:', originCity);
+        console.log('[Frete Dinâmico] CEP destino:', cepUnmasked, '| UF:', destUfCode, '| Cidade:', destCity);
+
         if (formattedLocation) {
           wrapper.querySelector('#frete-sucesso').innerHTML = `
             <p class="td-frete-dinamico-location"><strong>${formattedLocation}</strong></p>
@@ -232,6 +236,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     async function calculateShippingRates(cepUnmasked, country, province, wrapper, originDestMeta = {}) {
       // Incluir província (estado) para evitar 422 e mensagens de validação do Shopify
+      console.log('[Frete Dinâmico] Calculando frete com Shopify', {
+        origem: SENDER_ZIP_UNMASKED,
+        destino: cepUnmasked,
+        pais: country,
+        estadoDestino: province || '(não informado)'
+      });
       const params = new URLSearchParams();
       params.set('shipping_address[zip]', cepUnmasked);
       params.set('shipping_address[country]', country);
