@@ -1,0 +1,361 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<style>
+.cep_consulta {
+color: #8F8F8F;
+}
+</style>
+<script>    
+    setTimeout(function waitJquery() {
+              if (window.jQuery) {
+                $( document ).ready(function() {                    
+                    $( "#clicktrigger" ).click(function() {
+                        $( "#boxxJuros" ).slideToggle("slow");
+                    });                  
+                  $(".boxxTot").hide();    
+                });               
+                
+              } else {
+                  setTimeout(waitJquery, 100);
+              }
+          }, 100);
+      
+      function calculaFreteFT () {
+        setTimeout(function waitJqueryToPerformFrete() {
+          if (window.jQuery) {
+        var dadosFT = "shop=" + $('#shopFT').val() + "&diasUteis=" + $('#diasUteisFT').val() + "&cep=" + $('#cepFT').val(); 
+        console.log( dadosFT );        
+        $('.naoSeiCep').fadeOut();              
+        $("#retornoFT").html('');            
+          } else {
+            setTimeout(waitJqueryToPerformFrete, 100);
+          }          
+        }, 100);             
+      }    
+</script>          
+<style>              
+      .nume2Frt{color:#02A051;font-weight:700;}
+      .nume3Frt{font-size: 10px;color:#8C8C8C;margin-top:5px;}
+      .product-shop .prices .on-sale{font-size:25px;}              
+</style>
+<style>    
+  #calcFrete {    
+    padding: 20px 0;   
+  }    
+  a.naoSeiCep {       
+    display: inline-block;   
+    margin: 0 5px;   
+    text-decoration: underline;   
+    font-size: 12px;
+    color:#8C8C8C;
+    font-family:arial;  
+  }   
+  .rowFrete {     
+    background-color: #eeeeee;   
+    margin: 0 0 10px 0;  
+  }    
+  span.rowValor {    
+    width: 100%;   
+    display: block;   
+  }    
+  span.valorFrete {     
+    font-weight: bold;   
+  }   
+  .calculoFrete {     }   
+  input.campoCep {      
+    background-color: #ffffff;   
+    border: 1px solid #e4e4e4;   
+    display: inline-block;    
+  }     
+  .content.carregandoDN {     
+    height:100% !important;   
+    width:100% !important;   
+    display:flex;   
+    align-items:center !important;   
+    justify-content:center !important;   
+    padding: 0 !important;   
+    margin:0 !important;   
+  }    
+  .carregandoDN .bWox {    
+    width:300px;   
+    text-align:center;   
+    font-size:20px;   
+    font-family:Arial   
+  }    
+  .carregandoDN .lds-ring {      
+    display:inline-block;   
+    position:relative;   
+    width:64px;
+    height:64px;  
+  }    
+  .carregandoDN .lds-ring div{   box-sizing:border-box;   display:block;   position:absolute;   width:51px;   height:51px;   margin:6px;   border:6px solid #a0a0a0;   border-radius:50%;   animation:lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;   border-color:#a0a0a0 transparent transparent transparent;  }  .carregandoDN .lds-ring div:nth-child(1){   animation-delay:-0.45s;  }  .carregandoDN .lds-ring div:nth-child(2){   animation-delay:-0.3s;  }  .carregandoDN .lds-ring div:nth-child(3){   animation-delay:-0.15s;  }  @keyframes lds-ring{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}  
+#retornoFT {
+margin: 15px 0px 15px 0 !important;
+}
+</style>
+ <style>          
+   .fretado {              
+    background: #000;
+    background-size: 200px;
+    border-bottom: 1px solid #000;
+    width: fit-content;
+    padding: 5px;
+    color: white !important;
+    margin: 0 9px 0 0;
+    font-size: 21px !important;
+    border-radius: 0 10px 10px 0;              
+              }              
+   .fretado2 {              
+    display: block;
+    margin: -29px 0 -27px 100px;
+    color: var(--freteprice-color);               
+              }              
+    .fretado3 {              
+     font-weight: 700;
+     padding: 5px;                
+              }              
+    .corfrete {
+     font-weight: 400;                
+                }              
+    .tempofrete {                
+    border-top: 0px solid #000;
+    border-radius: 0;
+    padding: 19px;
+    margin-top: 10px;                
+              }              
+    .tempofrete i {                
+    font-size: 19px;
+    border: 1px solid #eaeaea;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px 11px 0 0;                
+}
+    .tempofrete1 , .tempofrete2 {
+     font-size: 16px;
+     font-weight: 600;                
+              }
+     .tempofrete2 {
+                font-size: 16px;
+                font-weight: 600;                
+              }
+     .colorfretegeral  {
+      font-size: 16px;                
+              }                              
+@media (max-width: 768px) {                
+.tempofrete {padding: 10px;}              
+.tempofrete span {  
+ font-size: 12px;  
+}                
+.tempofrete2 {
+    color: #000;
+    font-size: 14px;
+    font-weight: 600;
+    display: block;
+}  
+  .fretado3 {    
+    font-weight: 700;
+    color: var(--freteprice-color);
+    padding: 5px;
+    display: inline-block;
+    width: fit-content;      
+}                
+.colorfretegeral {    
+    font-size: 13px;                  
+  }              
+}
+</style>
+<style>  
+  .estados_box_frete {    
+    display: block;
+    margin: 0 0 -12px 0;  
+  }  
+  #estadosfrete {    
+    margin: 0 103px 0 0;
+    border: 1px solid #efefef;
+    padding: 5px;
+    width: 220px;
+    font-size: 16px;
+    border-radius: 6px;
+    display: inline-flex;  
+  }  
+  .estadosfrete {    
+    border: 1px solid #efefef;
+    padding: 5px;
+    margin: 0 0 0 -92px;
+    width: 83px;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 6px;
+    display: inline-flex;  
+  }  
+.testimonial-wrap {
+  padding: 5px;
+  margin-bottom: 10px;
+}
+.testimonial-wrap.active {
+}
+.hidden-content {
+  height: 0px;
+  visibility: hidden;
+  transition: all 0.5s ease-out;
+}
+.active .hidden-content {  
+  margin: 10px 0 0 0;
+  height: auto;
+  visibility: visible;
+  transition: all 0.5s ease-in;
+}
+button {
+  display: inline-block;
+}  
+  .valorfrete_active {    
+    padding: 19px;
+    margin: -41px 0 0 0;    
+}
+  @media (max-width: 768px) {  
+  .active .hidden-content {
+    font-size: 12px !important;    
+    }    
+  .valorfrete_active {    
+    padding: 19px 10px !important    
+    }  
+  }  
+</style>
+           <script>
+              function convertDate(inputFormat) {
+              function pad(s) { return (s < 10) ? '0' + s : s; }
+              var d = new Date(inputFormat);
+              return [pad(d.getDate())].join('/');
+            }
+
+            function getMesExtenso(mes){
+                return this.arrayMes[mes];
+            }
+
+            var arrayMes = new Array(12);
+            arrayMes[0] = "janeiro";
+            arrayMes[1] = "fevereiro";
+            arrayMes[2] = "março";
+            arrayMes[3] = "abril";
+            arrayMes[4] = "maio";
+            arrayMes[5] = "junho";
+            arrayMes[6] = "julho";
+            arrayMes[7] = "agosto";
+            arrayMes[8] = "setembro";
+            arrayMes[9] = "outubro";
+            arrayMes[10] = "novembro";
+            arrayMes[11] = "dezembro";  
+  			var showMes = "";
+            var date = new Date();
+            var diax = date.setDate(date.getDate() + 10);
+            var diay = date.setDate(date.getDate() + 15);
+            var mes = getMesExtenso(date.getMonth());  
+            function data(data){
+              var d = new Date(data);
+              return getMesExtenso(d.getMonth());
+            }  			
+            if(data(diax) !== data(diay)){
+				showMes = " de " + data(diax);
+            }            
+  			$.getJSON( "https://wtfismyip.com/json", function(localizacao) {
+				var localizacao = localizacao['YourFuckingLocation'];
+				var regiao = localizacao.replace(", Brazil", "");
+			  $("#custom-address").html("" + regiao + " e Região.");              
+              $(".shipping-estimated").html("<i class='las la-las la-clock'></i> <span style='display: block;margin: -28px 0 -25px 46px;font-size: 14px;'>Previsão de Entrega: <span class='tempofrete2'>" + convertDate(diax) + showMes + " a " + convertDate(diay) + " de " + mes + "</span> </span>");
+              $("#valor-regiao").html(' ' + regiao + ' e Região. ');
+		    });
+          </script>            
+<div class="tempofrete" style="display: none;">         
+              <i class='las la-las la-shipping-fast'></i>               
+              <span class="colorfretegeral"> </span><br>
+              <span class="colorfretegeral"> </span> 
+</div>
+<div class="valorfrete_active" style="padding: 19px;margin: -41px 0 0 0;">
+<span style="width: 100%;float: left;font-size: 14px;font-weight: 600;margin: 14px 0 12px;text-decoration: none;color:#4a4a4a;border-top:1px solid #e5e5e5;padding-top:10px;">CONSULTAR ENVIO</span>
+<div class="calculoFrete">       
+      <!--<form id="calcFreteFT" method="post" action="">-->   
+        <input type="text" name="cep" class="campoCep" id="cepFT" placeholder="Digite seu CEP" style="font-size: 14px;width:150px; height: 38px;display: inline-block;-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;line-height: 40px;height: 40px;padding: 0 10px;border: 1px solid #E5E5E5;float: left;margin-right: 0;">   
+      <!--</form>-->        
+      <div class="content carregandoDN" style="display: none;">
+        <div class="bWox">
+          <div class="lds-ring">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>         
+<script>        
+   $(document).ready(function() {
+    $(".toggle-button").on("click", function() {
+    $(this).closest(".testimonial-wrap").toggleClass("active");
+  });
+});        
+</script>       
+   <div class="testimonial-wrap tempofrete">       
+     <button type="button" onclick="calculaFreteFT()" class="toggle-button" style="background-color: #F4F4F4;border: 0 none;border-radius: 4px;height: 40px;min-width: 45px !important;color:#4a4a4a !important;font-family: arial, tahoma, verdana, sans-serif !important;font-weight: normal;font-size: 15px;text-transform: none;margin: 0 0 0 7px;"><span>Ok</span> </button>           
+     <div class="hidden-content" style="font-size: 14px;"><ul style="list-style-type: none;padding: 0;margin-bottom: -30px;">
+       <li style="display:none;"><span style="width: 45px;display: inline-block;margin: 0 11px 0 0;"><img src="//cdn.shopify.com/s/files/1/0549/4806/9618/t/2/assets/air.svg?v=979563443925487508" alt="icon" /></span> <strong>Frete Prioritário:</strong> R$ 24,90 (5 a 15 dias) </li>  
+         <li style="width: max-content;"><span style="width: 45px;display: inline-block;margin: 0 11px 0 0;"><script src="https://cdn.lordicon.com/lusqsztk.js"></script>
+<img src="https://cdn.shopify.com/s/files/1/0538/2573/2800/files/fast-delivery_480x480.png?v=1650579268" alt="" width="50" height="50" data-mce-fragment="1" data-mce-src="https://cdn.shopify.com/s/files/1/0538/2573/2800/files/fast-delivery_480x480.png?v=1650579268"></span> <strong style:"color:#4a4a4a;">Frete Grátis:</strong> <span style="text-decoration: line-through; color:red;font-weight:600;"> R$ 37,45</span> <div style="margin-left:60px; margin-top: -20px;">               <!-- Delivery time -->
+                        <div class="main-font-title" style="padding-top: -20px;">
+                        <script>
+                            if(!window.jQuery || typeof jQuery == 'undefined' || jQuery == null)
+                            {
+                                document.write('<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></' + 'script>');
+                            }
+                        </script>
+                        <script>
+                            function convertDate(e) {
+                                var t, o = new Date(e);
+                                return [(t = o.getDate(), t < 10 ? "0" + t : t)].join("/")
+                            }
+                            function getMesExtenso(e) {
+                                var t = new Array(12);
+                                return t[0] = "janeiro", t[1] = "fevereiro", t[2] = "março", t[3] = "abril", t[4] = "maio", t[5] = "junho", t[6] = "julho", t[7] = "agosto", t[8] = "setembro", t[9] = "outubro", t[10] = "novembro", t[11] = "dezembro", t[e]
+                            }
+                            jQuery(document).ready(function (e) {
+                                const todayUseMin = new Date();
+                                const todayUseMax = new Date();
+                                const deliveryMin = new Date(todayUseMin.setDate(todayUseMin.getDate() + 10));
+                                const deliveryMax = new Date(todayUseMax.setDate(todayUseMax.getDate() + 24));
+                                const mesDeliveryMin = getMesExtenso(deliveryMin.getMonth());
+                                const mesDeliveryMax = getMesExtenso(deliveryMax.getMonth());
+                                let textDelivery
+                                if (mesDeliveryMax === mesDeliveryMin) {
+                                    textDelivery = "<strong>" + convertDate(deliveryMin) + "</strong> e <strong>" + convertDate(deliveryMax) + " de " + mesDeliveryMax + "</strong>";
+                                } else {
+                                    textDelivery = "<strong>" + convertDate(deliveryMin) + " de " + mesDeliveryMin + "</strong> e <strong>" + convertDate(deliveryMax) + " de " + mesDeliveryMax + "</strong>"
+                                }
+                                e.getJSON("https://wtfismyip.com/json",
+                                    function (response) {
+                                        const location = response.YourFuckingLocation.replace(", Brazil", "");
+                                        e(".custom-address").html(
+                                            )
+                                        e(".shipping-estimated").html("Receba entre: " + textDelivery + ".")
+                                        e(".shipping-preview-loading").hide()
+                                        e(".text-garantia").show();
+                                        e(".text-troca").show();
+                                    })
+                            });
+                        </script>
+                        <div class="shipping-preview-line" style="position: relative;margin-left: 0;">
+                           <div class="bg-info-ship"> <p class="shipping-preview-loading"
+                               style="text-align: left !important;color: #4a4a4a !important;padding: 0 0 0 60px;font-size: 14px !important;margin: 0px 0 30px 0;display:block;">
+                                Carregando, aguarde...</p>
+                            <p style="text-align: left !important;color: #4a4a4a !important;padding: 0 0 0 0px;font-size: 14px !important;margin: 0px 0 0 0;"
+                               class="custom-address"></p>
+                            <p style="text-align: left !important;color: #4a4a4a !important;padding: 0 0 0 0px;font-size: 12px !important;margin: 0px 0 0 0;"
+                               class="shipping-estimated"></p></div>                                                  
+                        </div>
+                    </div></div>
+       <br> <span style="text-align: right;display: block;margin: -12px 0 0 0;color: #00a386;"></span>
+       </li>
+       </ul>          
+       <span style="display: block;border-top: 0px solid #e5e5e5;padding: 5px 0; font-size: small;"> <b style="font-size 12px !important;color:#4a4a4a">Entrega</b> <svg style="fill:#4a4a4a;margin-left:0px; margin-bottom:-3px;" width="42" height="12" viewBox="0 0 41 13" xmlns="http://www.w3.org/2000/svg"><path fill-rule="nonzero" d="M2.628 0h5.255L5.255 4.643h4.38L2.628 13l1.751-5.571H0L2.628 0zm11.589 9.533h-1.959l1.674-7.515H19.5l-.376 1.69h-3.61l-.25 1.172h3.519l-.376 1.69h-3.53l-.66 2.963zm9.468.136c-2.334 0-3.484-1.105-3.484-2.682 0-.124.034-.383.057-.496l1.002-4.473h1.992l-.99 4.428c-.012.057-.034.18-.034.316.011.62.49 1.217 1.457 1.217 1.048 0 1.583-.654 1.776-1.533l.991-4.428h1.981l-.99 4.462c-.41 1.825-1.412 3.189-3.758 3.189zm10.118-.136h-5.01l1.673-7.515h1.959l-1.287 5.825h3.04l-.375 1.69zm6.678 0h-5.01l1.674-7.515h1.959l-1.287 5.825h3.04l-.376 1.69z"></path></svg> <span style="font-size: small;" class=" tempofrete1" id="custom-address"></span><br> </span>
+       </div>  
+       </div>         
+    <div id="retornoFT" style="margin-top: 15px;"></div>    
+  </div>  
+</div>
+
