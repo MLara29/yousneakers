@@ -9556,7 +9556,7 @@ select::-ms-expand {
 
 .product-item--vertical .product-item__action-list,
 .product-item--horizontal .product-item__action-list {
-  margin: 20px 0 5px 0;
+  margin: 15px 0 0px 0;
 }
 
 .product-item--vertical .product-item__action-button,
