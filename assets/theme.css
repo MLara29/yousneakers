@@ -4531,7 +4531,7 @@ img.lazyload[data-sizes=auto] {
 }
 
 /* Small exception for the standalone product, that is not within a grid, so it must have borders on all edges */
-/*.custom-content--product .product-item::after {
+.custom-content--product .product-item::after {
   box-shadow: none;
 }
 
@@ -4543,7 +4543,7 @@ img.lazyload[data-sizes=auto] {
 .template-index .spr-badge-starrating,
 .template-index [class*="areviews_stars"] {
   display: none !important;
-}*/
+}
 /**
  * --------------------------------------------------------------------
  * FIELD
