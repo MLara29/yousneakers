@@ -4545,6 +4545,13 @@ img.lazyload[data-sizes=auto] {
 .template-index [class*="areviews_stars"] {
   display: none !important;
 }
+
+/* Hide external review widgets with classes mentioned */
+.template-index .collection-star-section,
+.template-index .bk-reviews.default,
+.template-index .bk-reviews {
+  display: none !important;
+}
 /**
  * --------------------------------------------------------------------
  * FIELD
