@@ -4542,7 +4542,7 @@ img.lazyload[data-sizes=auto] {
 .template-index .spr-badge,
 .template-index .spr-badge-starrating,
 .template-index [class*="areviews_stars"] {
-  display: none !important;
+  display: hidden !important;
 }
 /**
  * --------------------------------------------------------------------
