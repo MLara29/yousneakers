@@ -849,6 +849,11 @@
           "smartsize_conversion_label_IN": "INCHES",
           "hide_default_button": false
         }
+      },
+      "5079176791768978079": {
+        "type": "shopify://apps/ga-size-chart-size-guides/blocks/app-embeded/508e6c37-219e-4cac-9ac5-678172eb27d9",
+        "disabled": true,
+        "settings": {}
       }
     }
   },
