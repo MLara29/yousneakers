@@ -244,7 +244,29 @@ F
       
       {%- endif -%}
       
-    
+      <div style="margin: 2px 0;">
+      {%- if template.name == 'product' and template != 'product.quick-view' -%}
+      <div class='areviews_header_stars'></div>
+      {%- endif -%}
+      
+      {%- if template.name == 'product' and settings.show_reviews_badge -%}
+        <a class="product-item__reviews-badge link" href="{{ product.url | within: collection }}#product-reviews">
+          <span class="shopify-product-reviews-badge" data-id="{{ product.id }}">
+            {%- comment -%}Display a placeholder, to allocate space{%- endcomment -%}
+            <div class="spr-badge" style="opacity: 0">
+              <span class="spr-starrating spr-badge-starrating">
+                <i class="spr-icon spr-icon-star-empty"></i>
+                <i class="spr-icon spr-icon-star-empty"></i>
+                <i class="spr-icon spr-icon-star-empty"></i>
+                <i class="spr-icon spr-icon-star-empty"></i>
+                <i class="spr-icon spr-icon-star-empty"></i>
+              </span>
+            </div>
+          </span>
+        </a>
+      {%- endif -%}
+      
+     </div>
         
       {%- if settings.show_inventory_quantity and product.template_suffix != 'pre-order' -%}
         {%- if product.available -%}

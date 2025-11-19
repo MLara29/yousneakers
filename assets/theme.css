@@ -4536,14 +4536,14 @@ img.lazyload[data-sizes=auto] {
 }
 
 /* Hide review stars on home cards */
-.template-index .areviews_product_item,
+/*.template-index .areviews_product_item,
 .template-index .areviews_header_stars,
 .template-index .product-item__reviews-badge,
 .template-index .spr-badge,
 .template-index .spr-badge-starrating,
 .template-index [class*="areviews_stars"] {
   display: none !important;
-}
+}*/
 /**
  * --------------------------------------------------------------------
  * FIELD
