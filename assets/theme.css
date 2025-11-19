@@ -4536,7 +4536,7 @@ img.lazyload[data-sizes=auto] {
 }
 
 /* Hide review stars on home cards */
-.template-index .areviews_product_item,
+/*.template-index .areviews_product_item,*/
 .template-index .areviews_header_stars,
 .template-index .product-item__reviews-badge,
 .template-index .spr-badge,
