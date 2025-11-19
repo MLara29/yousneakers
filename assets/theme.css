@@ -4218,7 +4218,7 @@ img.lazyload[data-sizes=auto] {
 .featured-collection .product-item {
   border: none;
   border-right: none;
-  min-height: 500px;
+  
 }
 
 .featured-collection .product-item::after {
