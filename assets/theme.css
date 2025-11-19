@@ -4531,12 +4531,12 @@ img.lazyload[data-sizes=auto] {
 }
 
 /* Small exception for the standalone product, that is not within a grid, so it must have borders on all edges */
-.custom-content--product .product-item::after {
+/*.custom-content--product .product-item::after {
   box-shadow: none;
 }
 
 /* Hide review stars on home cards */
-/*.template-index .areviews_product_item,
+.template-index .areviews_product_item,
 .template-index .areviews_header_stars,
 .template-index .product-item__reviews-badge,
 .template-index .spr-badge,
