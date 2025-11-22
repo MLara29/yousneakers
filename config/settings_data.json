@@ -64,7 +64,7 @@
     "social_facebook": "Facebook.com.br",
     "social_twitter": "",
     "social_pinterest": "",
-    "social_instagram": "instagram.com.br",
+    "social_instagram": "instagram.com/yousneakersofc",
     "social_vimeo": "",
     "social_tumblr": "",
     "social_youtube": "",
@@ -181,7 +181,7 @@
           "show_payment_icons": true,
           "show_locale_selector": false,
           "show_currency_selector": false,
-          "show_cookie_bar": false,
+          "show_cookie_bar": true,
           "text": "<p>Utilizamos cookies para melhorar nosso site e sua experiência de compra. Ao continuar navegando em nosso site,<strong>você está de acordo conforme nossa política quando a utilização de cookies.</strong></p>",
           "accept_button": "ENTENDI E FECHAR"
         }
@@ -836,6 +836,43 @@
           "link_title": "Ver Todos",
           "link_url": ""
         }
+      },
+      "notifcacoes_popup_vendas_BJEdJL": {
+        "type": "notifcacoes-popup-vendas",
+        "name": "Recent Sales Popup",
+        "settings": {
+          "popup_title": "",
+          "show_interval": 30,
+          "display_duration": 6,
+          "popup_background_color": "#ffffff",
+          "border_color": "#e6e6e6",
+          "text_color": "#000000",
+          "customer_text_color": "#666666",
+          "time_text_color": "#999999",
+          "accent_color": "#000f9f",
+          "border_radius": 8,
+          "image_border_radius": 6,
+          "product_1": "tenis-adidas-campus-azul-e-branco-copia",
+          "customer_name_1": "Pedro",
+          "product_2": "dunk-linha-luxo-cacau",
+          "customer_name_2": "Anderson",
+          "product_3": "tenis-air-force-1-panda-carbono",
+          "customer_name_3": "Aline",
+          "product_4": "dunk-low-panda",
+          "customer_name_4": "Maicon",
+          "product_5": "",
+          "customer_name_5": "",
+          "product_6": "",
+          "customer_name_6": "",
+          "product_7": "",
+          "customer_name_7": "",
+          "product_8": "",
+          "customer_name_8": "",
+          "product_9": "",
+          "customer_name_9": "",
+          "product_10": "",
+          "customer_name_10": ""
+        }
       }
     },
     "content_for_index": [
@@ -848,7 +885,8 @@
       "collection_with_image_xjYa77",
       "slideshow_7dhCqj",
       "featured_collection_HEggYt",
-      "featured_collection_PWnKF4"
+      "featured_collection_PWnKF4",
+      "notifcacoes_popup_vendas_BJEdJL"
     ],
     "blocks": {
       "8329602812678528339": {
@@ -860,18 +898,6 @@
         "type": "shopify://apps/ga-size-chart-size-guides/blocks/app-embeded/508e6c37-219e-4cac-9ac5-678172eb27d9",
         "disabled": true,
         "settings": {}
-      },
-      "4293466245358296089": {
-        "type": "shopify://apps/smartsize/blocks/app-embed/465a43e0-6a1a-4d30-b82e-fe6118568705",
-        "disabled": true,
-        "settings": {
-          "button_horizontal_aligment": "center",
-          "button_horizontal_aligment_mobile": "center",
-          "smartsize_button_label": "--",
-          "smartsize_conversion_label_CM": "CM",
-          "smartsize_conversion_label_IN": "INCHES",
-          "hide_default_button": false
-        }
       }
     }
   },
