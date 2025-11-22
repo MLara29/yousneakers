@@ -70,6 +70,18 @@ document.addEventListener('DOMContentLoaded', function () {
   var dragging = false;
   var offsetX = 0;
   var offsetY = 0;
+  var closeBtn = sphere.querySelector('.floating-video-close');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      try {
+        sphere.remove();
+      } catch (err) {
+        if (sphere && sphere.parentNode) sphere.parentNode.removeChild(sphere);
+      }
+    });
+  }
   function start(x, y) {
     dragging = true;
     sphere.classList.add('dragging');
@@ -104,6 +116,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   sphere.addEventListener('mousedown', function (e) {
     e.preventDefault();
+    if (e.target && e.target.closest('.floating-video-close')) return;
     start(e.clientX, e.clientY);
   });
   document.addEventListener('mousemove', function (e) {
@@ -112,6 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
   document.addEventListener('mouseup', end);
   sphere.addEventListener('touchstart', function (e) {
     var t = e.touches[0];
+    if (t && e.target && e.target.closest && e.target.closest('.floating-video-close')) return;
     start(t.clientX, t.clientY);
   }, { passive: true });
   document.addEventListener('touchmove', function (e) {
