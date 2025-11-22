@@ -63,3 +63,60 @@ function parcelamento() {
 $(".block-swatch__radio").change(function () {
   setTimeout(function () { parcelamento(); }, 150);
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+  var sphere = document.querySelector('.floating-video-sphere');
+  if (!sphere) return;
+  var dragging = false;
+  var offsetX = 0;
+  var offsetY = 0;
+  function start(x, y) {
+    dragging = true;
+    sphere.classList.add('dragging');
+    var rect = sphere.getBoundingClientRect();
+    offsetX = x - rect.left;
+    offsetY = y - rect.top;
+    sphere.style.right = '';
+    sphere.style.bottom = '';
+    sphere.style.position = 'fixed';
+    sphere.style.top = rect.top + 'px';
+    sphere.style.left = rect.left + 'px';
+  }
+  function move(x, y) {
+    if (!dragging) return;
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+    var width = sphere.offsetWidth;
+    var height = sphere.offsetHeight;
+    var nx = x - offsetX;
+    var ny = y - offsetY;
+    if (nx < 0) nx = 0;
+    if (ny < 0) ny = 0;
+    if (nx > w - width) nx = w - width;
+    if (ny > h - height) ny = h - height;
+    sphere.style.left = nx + 'px';
+    sphere.style.top = ny + 'px';
+  }
+  function end() {
+    if (!dragging) return;
+    dragging = false;
+    sphere.classList.remove('dragging');
+  }
+  sphere.addEventListener('mousedown', function (e) {
+    e.preventDefault();
+    start(e.clientX, e.clientY);
+  });
+  document.addEventListener('mousemove', function (e) {
+    move(e.clientX, e.clientY);
+  });
+  document.addEventListener('mouseup', end);
+  sphere.addEventListener('touchstart', function (e) {
+    var t = e.touches[0];
+    start(t.clientX, t.clientY);
+  }, { passive: true });
+  document.addEventListener('touchmove', function (e) {
+    var t = e.touches[0];
+    move(t.clientX, t.clientY);
+  }, { passive: true });
+  document.addEventListener('touchend', end);
+});
