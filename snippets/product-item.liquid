@@ -361,7 +361,7 @@ F
 {% for _m in product.media %}
   {% if _m.media_type == 'video' or _m.media_type == 'external_video' %}
     {% unless _card_video_rendered %}
-      <div class="product-card-video" style="display:none">
+      <div class="product-card-video" data-video-source="card" data-product-handle="{{ product.handle }}" style="display:none">
         {% if _m.media_type == 'video' %}
           {{- _m | video_tag: image_size: '600x', autoplay: false, loop: false, muted: true, controls: false, playsinline: true -}}
         {% else %}
