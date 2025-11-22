@@ -6,4 +6,10 @@
   <div class="page__content rte">
     {{ page.content }}
   </div>
+
+  {% if page.handle == 'guia-de-tamanhos' %}
+  <div class="page__actions" style="text-align:center;margin-top:20px;">
+    <button type="button" class="button button--primary" aria-label="Fechar e voltar" onclick="(function(){try{if(window.parent&&window.parent.document){window.parent.document.dispatchEvent(new CustomEvent('modal:close'));}}catch(e){} if(document.referrer){window.location=document.referrer;}else{if(history.length>1){history.back();}else{window.location='{{ routes.root_url }}';}} })()">Fechar e voltar</button>
+  </div>
+  {% endif %}
 </div>
