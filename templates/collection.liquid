@@ -7,3 +7,20 @@
 {% section 'static-promotion-list' %}
 {% section 'static-recently-viewed-products' %}
 {% endif %}
+
+{% assign seq_handles = 'frontpage,nike-air-force,vans-1,adidas,tenis-nike' | split: ',' %}
+{% if seq_handles contains collection.handle %}
+  <div id="index-video-seq" style="display:none">
+    {% for product in collection.products limit: 50 %}
+      {% for media in product.media %}
+        {% if media.media_type == 'video' %}
+          <div class="seq-item">{{ media | video_tag: image_size: '600x', autoplay: false, loop: false, muted: true, controls: false, playsinline: true }}</div>
+          {% break %}
+        {% elsif media.media_type == 'external_video' %}
+          <div class="seq-item">{{ media | external_video_tag: image_size: '600x', autoplay: true, loop: false, muted: true, controls: false }}</div>
+          {% break %}
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+  </div>
+{% endif %}
