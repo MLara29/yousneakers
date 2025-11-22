@@ -836,64 +836,10 @@
           "link_title": "Ver Todos",
           "link_url": ""
         }
-      },
-      "logo_list_Nr3JcP": {
-        "type": "logo-list",
-        "blocks": {
-          "logo_Kn3U9P": {
-            "type": "logo",
-            "settings": {
-              "image": "shopify://shop_images/Design_sem_nome_16.png",
-              "link": ""
-            }
-          },
-          "logo_fPrd9f": {
-            "type": "logo",
-            "settings": {
-              "image": "shopify://shop_images/Logo_Adidas.webp",
-              "link": ""
-            }
-          },
-          "logo_zeBrxi": {
-            "type": "logo",
-            "settings": {
-              "image": "shopify://shop_images/vans-logo-png_seeklogo-257446.png",
-              "link": ""
-            }
-          },
-          "logo_tqhKFj": {
-            "type": "logo",
-            "settings": {
-              "image": "shopify://shop_images/Design_sem_nome_14.png",
-              "link": ""
-            }
-          },
-          "logo_iCbWYV": {
-            "type": "logo",
-            "settings": {
-              "image": "shopify://shop_images/Design_sem_nome_15.png",
-              "link": ""
-            }
-          }
-        },
-        "block_order": [
-          "logo_Kn3U9P",
-          "logo_fPrd9f",
-          "logo_zeBrxi",
-          "logo_tqhKFj",
-          "logo_iCbWYV"
-        ],
-        "name": "Logo list",
-        "settings": {
-          "title": "",
-          "link_title": "",
-          "link": ""
-        }
       }
     },
     "content_for_index": [
       "slideshow",
-      "logo_list_Nr3JcP",
       "1649489657b78ca727",
       "16153539675ef431a7",
       "promotion_list_Q9JA6t",
