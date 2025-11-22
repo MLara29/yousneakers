@@ -357,3 +357,18 @@ F
     {%- endif -%}
   </div>
 </div>
+{% assign _card_video_rendered = false %}
+{% for _m in product.media %}
+  {% if _m.media_type == 'video' or _m.media_type == 'external_video' %}
+    {% unless _card_video_rendered %}
+      <div class="product-card-video" style="display:none">
+        {% if _m.media_type == 'video' %}
+          {{- _m | video_tag: image_size: '600x', autoplay: false, loop: false, muted: true, controls: false, playsinline: true -}}
+        {% else %}
+          {{- _m | external_video_tag: image_size: '600x', autoplay: true, loop: false, muted: true, controls: false -}}
+        {% endif %}
+      </div>
+      {% assign _card_video_rendered = true %}
+    {% endunless %}
+  {% endif %}
+{% endfor %}
