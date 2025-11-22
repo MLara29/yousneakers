@@ -148,6 +148,14 @@
   <!-- Não remova. Checkout Yampi. -->
 {% capture yampi_snippet_content %}{% include 'YampiSnippet' %}{% endcapture %} {% unless yampi_snippet_content contains 'Liquid error' %} {% include 'YampiSnippet' %} {% endunless %}
 <!-- Não remova. Checkout Yampi. --> 
+  <a href="{{ settings.social_instagram | default: 'https://instagram.com' }}" target="_blank" rel="noopener" style="position: fixed;bottom: 105px;right: 25px;z-index: 5;display: flex;box-shadow: 2px 2px 6px rgba(0, 0, 0, .4);border-radius: 100px;">
+    <svg xmlns="http://www.w3.org/2000/svg" aria-label="Instagram" role="img" viewBox="0 0 512 512" style="width: 50px;border-radius: 50px;">
+      <rect width="512" height="512" rx="15%" fill="{{ settings.accent_color }}"></rect>
+      <circle cx="346" cy="166" r="26" fill="#ffffff"></circle>
+      <rect x="160" y="160" width="192" height="192" rx="48" ry="48" fill="none" stroke="#ffffff" stroke-width="32"></rect>
+      <circle cx="256" cy="256" r="70" fill="none" stroke="#ffffff" stroke-width="32"></circle>
+    </svg>
+  </a>
   <a href="https://wa.me/5515991409537?text=" target="_blank" style="position: fixed;bottom: 45px;right: 25px;z-index: 5;display: flex;box-shadow: 2px 2px 6px rgba(0, 0, 0, .4);border-radius: 100px;">
     <svg xmlns="http://www.w3.org/2000/svg" aria-label="WhatsApp" role="img" viewBox="0 0 512 512" fill="#000000" style="width: 50px;border-radius: 50px;">
         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
