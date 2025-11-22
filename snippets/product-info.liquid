@@ -51,6 +51,9 @@
     
       {%- if template.name == 'product' and template != 'product.quick-view' -%}
       <h1 class="product-meta__title heading h1">{{ product.title }} </span></h1>
+      <div class="product-meta__size-guide" style="margin: 6px 0 10px 0;">
+        <a class="link" href="/pages/guia-de-tamanhos" aria-label="Guia de medidas">Guia de medidas</a>
+      </div>
       {%- else -%}
         <h3 class="product-meta__title heading h2">
           <a href="{{ product.url }}">{{ product.title }}</a>
@@ -312,6 +315,12 @@
       {%- else -%}
         <input type="hidden" name="id" data-sku="{{ selected_variant.sku }}" value="{{ selected_variant.id }}">
       {%- endunless -%}
+
+      {%- if template.name == 'product' -%}
+      <div class="product-form__size-guide" style="margin: 6px 0 12px 0;">
+        <a class="link" href="/pages/guia-de-tamanhos" aria-label="Guia de medidas">Guia de medidas</a>
+      </div>
+      {%- endif -%}
 
       <div class="product-form__info-list">
         <div class="product-form__info-item">
