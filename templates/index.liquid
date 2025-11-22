@@ -1,1 +1,23 @@
 {{ content_for_index }}
+
+{%- comment -%}
+  Floating video sphere on homepage: collect product videos and cycle through
+{%- endcomment -%}
+<div id="index-video-seq" style="display:none">
+{%- paginate collections['all'].products by 50 -%}
+  {%- for product in collections['all'].products -%}
+    {%- assign found_video = false -%}
+    {%- for media in product.media -%}
+      {%- if media.media_type == 'video' -%}
+        <div class="seq-item">{{ media | video_tag: image_size: '600x', autoplay: false, loop: false, muted: true, controls: false, playsinline: true }}</div>
+        {%- assign found_video = true -%}
+        {%- break -%}
+      {%- elsif media.media_type == 'external_video' -%}
+        <div class="seq-item">{{ media | external_video_tag: image_size: '600x', autoplay: true, loop: false, muted: true, controls: false }}</div>
+        {%- assign found_video = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endfor -%}
+{%- endpaginate -%}
+</div>
