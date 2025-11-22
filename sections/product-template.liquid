@@ -414,6 +414,25 @@
  
   
 </section>
+{% if template != 'product.quick-view' and product.media.size > 0 %}
+  {% assign video_media = '' %}
+  {% for media in product.media %}
+    {% if media.media_type == 'video' or media.media_type == 'external_video' %}
+      {% assign video_media = media %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+  {% if video_media != '' %}
+    <div class="floating-video-sphere" aria-hidden="false">
+      {% case video_media.media_type %}
+        {% when 'video' %}
+          {{- video_media | video_tag: image_size: '600x', autoplay: true, loop: true, muted: true, controls: false, playsinline: true -}}
+        {% when 'external_video' %}
+          {{- video_media | external_video_tag: image_size: '600x', autoplay: true, loop: true, muted: true, controls: false -}}
+      {% endcase %}
+    </div>
+  {% endif %}
+{% endif %}
 
 {% schema %}
 {
