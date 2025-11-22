@@ -42,9 +42,10 @@
   }
   .td-frete-dinamico-rate { color: #000; margin-top: 4px; }
   .td-frete-servico { color: #000; }
-  .td-frete-preco { margin-left: 6px; }
-  .td-frete-preco--risco { text-decoration: line-through; margin-left: 6px; }
-  .td-frete-gratis { margin-left: 6px; font-weight: 600; color: #000; }
+  .td-frete-prazo { color: {{ settings.accent_color }}; }
+  .td-frete-preco { margin-left: 6px; color: {{ settings.accent_color }}; }
+  .td-frete-preco--risco { text-decoration: line-through; margin-left: 6px; color: {{ settings.product_cor_do_preco_riscado | default: '#ee0000' }}; }
+  .td-frete-gratis { margin-left: 6px; font-weight: 600; color: {{ settings.success_color | default: '#00d864' }}; }
 </style>
 <div class="td-frete-dinamico">
   <div class="td-frete-dinamico-titulo">{{ settings.frete_dinamico_titulo }}</div>
