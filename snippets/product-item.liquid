@@ -372,3 +372,5 @@ F
     {% endunless %}
   {% endif %}
 {% endfor %}
+
+<div class="purchase-pop-product" data-title="{{ product.title | strip_html | escape }}" data-img="{{ product.featured_image | img_url: '300x' }}" data-href="{{ product.url | within: collection }}" style="display:none"></div>
