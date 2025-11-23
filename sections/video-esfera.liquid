@@ -1,71 +1,51 @@
-<section class="section section--text-centered" data-section-id="{{ section.id }}" data-section-type="video">
-  <div class="container">
-    {%- if section.settings.title != blank -%}
-      <h2 class="heading h3">{{ section.settings.title | escape }}</h2>
-    {%- endif -%}
+{% assign sid = section.id %}
+{% style %}
+.floating-video-sphere-{{ sid }}{position:fixed;left:16px;bottom:16px;width:140px;height:140px;border-radius:50%;border:3px solid {{ settings.accent_color }};overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.25);background:#000;z-index:9999}
+.floating-video-sphere-{{ sid }} video{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.floating-video-close-{{ sid }}{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.85);border:2px solid {{ settings.accent_color }};color:{{ settings.accent_color }};font-weight:700;font-size:14px;line-height:1;cursor:pointer;z-index:2}
+@media(max-width:640px){.floating-video-sphere-{{ sid }}{width:110px;height:110px;left:12px;bottom:12px}}
+{% endstyle %}
 
-    <div class="video-item" data-action="play-video">
-      <div class="video-wrapper">
-        <div class="video-wrapper__image-wrapper">
-          {%- if section.settings.image -%}
-            {%- capture supported_sizes -%}{%- render 'image-size', sizes: '300,400,500,600,700,800,900,1000,1200', image: section.settings.image -%}{%- endcapture -%}
-            {%- assign image_url = section.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
-
-            <img class="video-wrapper__image lazyload image--fade-in" data-src="{{ image_url }}" data-widths="[{{ supported_sizes }}]" data-sizes="auto" alt="{{ section.settings.image.alt | escape }}">
-
-            <noscript>
-              <img class="video-wrapper__image" src="{{ section.settings.image | img_url: '800x' }}" alt="{{ section.settings.image.alt | escape }}">
-            </noscript>
-          {%- elsif bsectionlock.settings.video_url.type == 'youtube' -%}
-            <img class="video-wrapper__image lazyload image--fade-in" data-src="https://img.youtube.com/vi/{{ section.settings.video_url.id }}/maxresdefault.jpg" alt="">
-          {%- else -%}
-            <div class="placeholder-background">
-              {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
-            </div>
-          {%- endif -%}
-
-          {% render 'icon', icon: 'play' %}
-        </div>
-
-        {% if section.settings.video_url.type == 'youtube' %}
-          <iframe data-src="https://www.youtube.com/embed/{{ section.settings.video_url.id }}?autoplay=1&showinfo=0&controls=1&rel=0&modestbranding=1" frameborder="0" allowfullscreen></iframe>
-          {% elsif section.settings.video_url.type == 'vimeo' %}
-          <iframe data-src="https://player.vimeo.com/video/{{ section.settings.video_url.id }}?autoplay=1&portrait=0&byline=0&color={{ settings.accent_color | remove_first: '#' }}" frameborder="0"></iframe>
-        {% endif %}
-      </div>
-    </div>
+<div class="floating-video-sphere-{{ sid }}" id="video-sphere-{{ sid }}">
+  <div style="width:100%;height:100%;position:relative">
+    <button type="button" class="floating-video-close-{{ sid }}" aria-label="Fechar">×</button>
+    <video autoplay muted playsinline loop></video>
   </div>
-</section>
+  <script>
+  (function(){
+    var sphere=document.getElementById('video-sphere-{{ sid }}');
+    if(!sphere) return;
+    var v=sphere.querySelector('video');
+    var urls=[
+      'https://cdn.shopify.com/videos/c/o/v/def24781da1541e69d7f79af41c1537b.mp4',
+      'https://cdn.shopify.com/videos/c/o/v/b2cc891d4b7941c58d4e81c52f2a0ebf.mp4',
+      'https://cdn.shopify.com/videos/c/o/v/9be9b2fa90374b26a3debbb027caf9f8.mp4',
+      'https://cdn.shopify.com/videos/c/o/v/5cc17f230f0f4342ade6d5939416001b.mp4',
+      'https://cdn.shopify.com/videos/c/o/v/a8cafd97fc9148098c533f2b3088a42e.mp4',
+      'https://cdn.shopify.com/videos/c/o/v/db631afedf78475daa8b3dc3bdc3a390.mp4',
+      'https://cdn.shopify.com/videos/c/o/v/583d9b1c8b854e8b8620918612830aa9.mp4',
+      'https://cdn.shopify.com/videos/c/o/v/f22a508bb5e24160ab11e3640ab101b1.mp4',
+      'https://cdn.shopify.com/videos/c/o/v/cde83aa3412b4ac188c5f841906a40f9.mp4',
+      'https://cdn.shopify.com/videos/c/o/v/8776ba5c7e5040c28ab5e182f3d2d6aa.mp4'
+    ];
+    var i=0;function setSrc(){v.src=urls[i];try{v.play()}catch(e){}}
+    setSrc();
+    v.addEventListener('ended',function(){i=(i+1)%urls.length;setSrc()});
+    var to=setInterval(function(){i=(i+1)%urls.length;setSrc()},15000);
+    var close=sphere.querySelector('.floating-video-close-{{ sid }}');
+    if(close){close.addEventListener('click',function(e){e.preventDefault();try{clearInterval(to)}catch(_e){};try{sphere.remove()}catch(__e){if(sphere&&sphere.parentNode)sphere.parentNode.removeChild(sphere)}})}
+  })();
+  </script>
+</div>
 
 {% schema %}
 {
-  "name": "Video",
+  "name": "Vídeo Esfera",
   "settings": [
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Heading",
-      "default": "Videos"
-    },
-    {
-      "type": "video_url",
-      "id": "video_url",
-      "accept": ["vimeo", "youtube"],
-      "label": "Video",
-      "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
-    },
-    {
-      "type": "image_picker",
-      "id": "image",
-      "label": "Image",
-      "info": "1200 x 700px .jpg recommended. Used when video is not loaded (required for Vimeo)."
-    }
+    {"type":"text","id":"title","label":"Título","default":"Vídeo Esfera"}
   ],
   "presets": [
-    {
-      "category": "Video",
-      "name": "Video"
-    }
+    {"category":"Video","name":"Vídeo Esfera"}
   ]
 }
 {% endschema %}
