@@ -842,7 +842,7 @@
         "name": "Recent Sales Popup",
         "settings": {
           "popup_title": "",
-          "show_interval": 120,
+          "show_interval": 10,
           "display_duration": 5,
           "popup_background_color": "#ffffff",
           "border_color": "#e6e6e6",
