@@ -880,6 +880,20 @@
         "settings": {
           "title": "Vídeo Esfera"
         }
+      },
+      "featured_collection_hfBQLg": {
+        "type": "featured-collection",
+        "name": "Featured collection",
+        "settings": {
+          "collection": "adidas-forum",
+          "title": "Adidas Fórum",
+          "products_count": 12,
+          "layout": "vertical",
+          "stack_desktop": false,
+          "show_quick_buy": false,
+          "link_title": "View all",
+          "link_url": ""
+        }
       }
     },
     "content_for_index": [
@@ -894,7 +908,8 @@
       "featured_collection_HEggYt",
       "featured_collection_PWnKF4",
       "notifcacoes_popup_vendas_BJEdJL",
-      "video_esfera_KyR89r"
+      "video_esfera_KyR89r",
+      "featured_collection_hfBQLg"
     ],
     "blocks": {
       "8329602812678528339": {
