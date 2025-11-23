@@ -1,6 +1,6 @@
 {% assign sid = section.id %}
 {% style %}
-.floating-video-sphere-{{ sid }}{position:fixed;left:16px;bottom:90px;width:140px;height:180px;border-radius:50%;border:3px solid {{ settings.accent_color }};overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.25);background:#000;z-index:9999;cursor:grab}
+.floating-video-sphere-{{ sid }}{position:fixed;left:16px;bottom:90px;width:140px;height:140px;border-radius:50%;border:3px solid {{ settings.accent_color }};overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.25);background:#000;z-index:9999;cursor:grab}
 .floating-video-sphere-{{ sid }}.dragging{cursor:grabbing}
 .floating-video-sphere-{{ sid }} video{width:100%;height:100%;object-fit:cover;border-radius:50%}
 .floating-video-close-{{ sid }}{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.85);border:2px solid {{ settings.accent_color }};color:{{ settings.accent_color }};font-weight:700;font-size:14px;line-height:1;cursor:pointer;z-index:2}
