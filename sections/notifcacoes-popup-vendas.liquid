@@ -1,4 +1,4 @@
-{% assign wsp_section_id = section.id | replace: '-', '' | downcase %}
+﻿{% assign wsp_section_id = section.id | replace: '-', '' | downcase %}
 
 {% style %}
   .wsp-recent-purchase-popup-{{ wsp_section_id }} {
@@ -195,14 +195,14 @@
         super();
         this.products = [];
         this.currentIndex = 0;
-        this.showInterval = parseInt(this.dataset.showInterval) * 1000;
+        this.showInterval = 240000;
         this.displayDuration = parseInt(this.dataset.displayDuration) * 1000;
         this.popup = this.querySelector('#wsp-recent-purchase-popup-{{ wsp_section_id }}');
         this.isVisible = false;
         this.timeoutId = null;
         this.intervalId = null;
-        this.names = ['Pedro','Maria','João','Ana','Lucas','Beatriz','Gustavo','Júlia','Bruno','Larissa','Felipe','Carla','Rafael','Luiza','Daniel','Camila','Thiago','Manuela'];
-        this.cities = ['Campinas/SP','Santo André/SP','Sorocaba/SP','São Paulo/SP','Rio de Janeiro/RJ','Belo Horizonte/MG','Curitiba/PR','Porto Alegre/RS','Salvador/BA','Fortaleza/CE','Recife/PE','Florianópolis/SC'];
+        this.names = ['Pedro','Maria','JoÃ£o','Ana','Lucas','Beatriz','Gustavo','JÃºlia','Bruno','Larissa','Felipe','Carla','Rafael','Luiza','Daniel','Camila','Thiago','Manuela'];
+        this.cities = ['Campinas/SP','Santo AndrÃ©/SP','Sorocaba/SP','SÃ£o Paulo/SP','Rio de Janeiro/RJ','Belo Horizonte/MG','Curitiba/PR','Porto Alegre/RS','Salvador/BA','Fortaleza/CE','Recife/PE','FlorianÃ³polis/SC'];
       }
 
       connectedCallback() {
@@ -236,7 +236,7 @@
           {% endif %}
         {% endfor %}
 
-        // Fallback automático: coletar produtos da coleção da página inicial e gerar clientes aleatórios
+        // Fallback automÃ¡tico: coletar produtos da coleÃ§Ã£o da pÃ¡gina inicial e gerar clientes aleatÃ³rios
         if (this.products.length === 0) {
           {% assign front = collections['frontpage'] %}
           {% if front and front.products.size > 0 %}
@@ -252,7 +252,7 @@
           {% endif %}
         }
 
-        // Útimo fallback: varrer DOM por links de produtos
+        // Ãštimo fallback: varrer DOM por links de produtos
         if (this.products.length === 0) {
           const links = Array.from(document.querySelectorAll('a[href*="/products/"]'));
           const items = [];
@@ -348,7 +348,7 @@
         productElement.textContent = product.title;
         
         const randomMinutes = Math.floor(Math.random() * 30) + 1;
-        timeElement.textContent = `${randomMinutes} minute${randomMinutes === 1 ? '' : 's'} atrás`;
+        timeElement.textContent = `${randomMinutes} minute${randomMinutes === 1 ? '' : 's'} atrÃ¡s`;
       }
     }
 
