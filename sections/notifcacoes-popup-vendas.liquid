@@ -201,6 +201,8 @@
         this.isVisible = false;
         this.timeoutId = null;
         this.intervalId = null;
+        this.names = ['Pedro','Maria','João','Ana','Lucas','Beatriz','Gustavo','Júlia','Bruno','Larissa','Felipe','Carla','Rafael','Luiza','Daniel','Camila','Thiago','Manuela'];
+        this.cities = ['Campinas/SP','Santo André/SP','Sorocaba/SP','São Paulo/SP','Rio de Janeiro/RJ','Belo Horizonte/MG','Curitiba/PR','Porto Alegre/RS','Salvador/BA','Fortaleza/CE','Recife/PE','Florianópolis/SC'];
       }
 
       connectedCallback() {
@@ -233,6 +235,46 @@
             });
           {% endif %}
         {% endfor %}
+
+        // Fallback automático: coletar produtos da coleção da página inicial e gerar clientes aleatórios
+        if (this.products.length === 0) {
+          {% assign front = collections['frontpage'] %}
+          {% if front and front.products.size > 0 %}
+            {% for p in front.products limit: 30 %}
+              this.products.push({
+                id: {{ p.id }},
+                title: {{ p.title | json }},
+                image: {% if p.featured_image %}{{ p.featured_image | image_url: width: 120 | json }}{% else %}null{% endif %},
+                customerName: (this.names[Math.floor(Math.random()*this.names.length)] + ' de ' + this.cities[Math.floor(Math.random()*this.cities.length)] + ' comprou'),
+                url: {{ p.url | json }}
+              });
+            {% endfor %}
+          {% endif %}
+        }
+
+        // Útimo fallback: varrer DOM por links de produtos
+        if (this.products.length === 0) {
+          const links = Array.from(document.querySelectorAll('a[href*="/products/"]'));
+          const items = [];
+          links.forEach(a => {
+            if (items.length >= 20) return;
+            const title = a.textContent && a.textContent.trim();
+            const imgEl = a.querySelector('img');
+            const img = imgEl && (imgEl.getAttribute('src') || imgEl.getAttribute('data-src'));
+            if (title && img) {
+              items.push({ title, image: img, url: a.href });
+            }
+          });
+          items.forEach(it => {
+            this.products.push({
+              id: null,
+              title: it.title,
+              image: it.image,
+              customerName: (this.names[Math.floor(Math.random()*this.names.length)] + ' de ' + this.cities[Math.floor(Math.random()*this.cities.length)] + ' comprou'),
+              url: it.url
+            });
+          });
+        }
       }
 
       setupEventListeners() {
