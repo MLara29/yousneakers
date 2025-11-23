@@ -1,4 +1,4 @@
-﻿{% assign wsp_section_id = section.id | replace: '-', '' | downcase %}
+{% assign wsp_section_id = section.id | replace: '-', '' | downcase %}
 
 {% style %}
   .wsp-recent-purchase-popup-{{ wsp_section_id }} {
@@ -348,7 +348,7 @@
         productElement.textContent = product.title;
         
         const randomMinutes = Math.floor(Math.random() * 30) + 1;
-        timeElement.textContent = `${randomMinutes} minute${randomMinutes === 1 ? '' : 's'} atrÃ¡s`;
+        timeElement.textContent = `${randomMinutes} minute${randomMinutes === 1 ? '' : 's'} atrás`;
       }
     }
 
