@@ -1,9 +1,10 @@
 {% assign sid = section.id %}
 {% style %}
-.floating-video-sphere-{{ sid }}{position:fixed;left:16px;bottom:16px;width:140px;height:140px;border-radius:50%;border:3px solid {{ settings.accent_color }};overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.25);background:#000;z-index:9999}
+.floating-video-sphere-{{ sid }}{position:fixed;left:16px;bottom:90px;width:140px;height:140px;border-radius:50%;border:3px solid {{ settings.accent_color }};overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.25);background:#000;z-index:9999;cursor:grab}
+.floating-video-sphere-{{ sid }}.dragging{cursor:grabbing}
 .floating-video-sphere-{{ sid }} video{width:100%;height:100%;object-fit:cover;border-radius:50%}
 .floating-video-close-{{ sid }}{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.85);border:2px solid {{ settings.accent_color }};color:{{ settings.accent_color }};font-weight:700;font-size:14px;line-height:1;cursor:pointer;z-index:2}
-@media(max-width:640px){.floating-video-sphere-{{ sid }}{width:110px;height:110px;left:12px;bottom:12px}}
+@media(max-width:640px){.floating-video-sphere-{{ sid }}{width:110px;height:110px;left:12px;bottom:80px}}
 {% endstyle %}
 
 <div class="floating-video-sphere-{{ sid }}" id="video-sphere-{{ sid }}">
@@ -34,6 +35,17 @@
     var to=setInterval(function(){i=(i+1)%urls.length;setSrc()},15000);
     var close=sphere.querySelector('.floating-video-close-{{ sid }}');
     if(close){close.addEventListener('click',function(e){e.preventDefault();try{clearInterval(to)}catch(_e){};try{sphere.remove()}catch(__e){if(sphere&&sphere.parentNode)sphere.parentNode.removeChild(sphere)}})}
+
+    var dragging=false,offsetX=0,offsetY=0;
+    function start(x,y){dragging=true;sphere.classList.add('dragging');var r=sphere.getBoundingClientRect();offsetX=x-r.left;offsetY=y-r.top;sphere.style.right='';sphere.style.bottom='';sphere.style.position='fixed';sphere.style.top=r.top+'px';sphere.style.left=r.left+'px'}
+    function move(x,y){if(!dragging) return;var w=window.innerWidth,h=window.innerHeight,sw=sphere.offsetWidth,sh=sphere.offsetHeight,nx=x-offsetX,ny=y-offsetY;if(nx<0) nx=0;if(ny<0) ny=0;if(nx>w-sw) nx=w-sw;if(ny>h-sh) ny=h-sh;sphere.style.left=nx+'px';sphere.style.top=ny+'px'}
+    function end(){if(!dragging) return;dragging=false;sphere.classList.remove('dragging')}
+    sphere.addEventListener('mousedown',function(e){if(e.target&&e.target.closest('.floating-video-close-{{ sid }}')) return;e.preventDefault();start(e.clientX,e.clientY)});
+    document.addEventListener('mousemove',function(e){move(e.clientX,e.clientY)});
+    document.addEventListener('mouseup',end);
+    sphere.addEventListener('touchstart',function(e){var t=e.touches[0];if(e.target&&e.target.closest('.floating-video-close-{{ sid }}')) return;start(t.clientX,t.clientY)},{passive:true});
+    document.addEventListener('touchmove',function(e){var t=e.touches[0];move(t.clientX,t.clientY)},{passive:true});
+    document.addEventListener('touchend',end);
   })();
   </script>
 </div>
