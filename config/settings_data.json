@@ -873,6 +873,13 @@
           "product_10": "",
           "customer_name_10": ""
         }
+      },
+      "video_esfera_KyR89r": {
+        "type": "video-esfera",
+        "name": "Vídeo Esfera",
+        "settings": {
+          "title": "Vídeo Esfera"
+        }
       }
     },
     "content_for_index": [
@@ -886,7 +893,8 @@
       "slideshow_7dhCqj",
       "featured_collection_HEggYt",
       "featured_collection_PWnKF4",
-      "notifcacoes_popup_vendas_BJEdJL"
+      "notifcacoes_popup_vendas_BJEdJL",
+      "video_esfera_KyR89r"
     ],
     "blocks": {
       "8329602812678528339": {
