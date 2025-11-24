@@ -369,7 +369,7 @@
           "titulofrete": "Entrega via Correios ©",
           "mostrar_bandeiras": true,
           "mostrar_quantidadevendidos": true,
-          "mostrar_codigodoitem": true,
+          "mostrar_codigodoitem": false,
           "show_share_buttons": false,
           "show_taxes_included": false,
           "selector_mode": "block",
