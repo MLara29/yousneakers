@@ -400,8 +400,8 @@
         "type": "product-recommendations",
         "settings": {
           "show_product_recommendations": true,
-          "heading": "Talvez você goste",
-          "show_quick_buy": true
+          "heading": "Produtos relacionados",
+          "show_quick_buy": false
         }
       },
       "announcement-bar": {
