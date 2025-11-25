@@ -921,6 +921,11 @@
         "type": "shopify://apps/ga-size-chart-size-guides/blocks/app-embeded/508e6c37-219e-4cac-9ac5-678172eb27d9",
         "disabled": true,
         "settings": {}
+      },
+      "10553572162545005813": {
+        "type": "shopify://apps/upsell-app-by-essentialwolf/blocks/app-embed/ae950cb1-1eb5-4b22-b308-ab5141c9f88c",
+        "disabled": false,
+        "settings": {}
       }
     }
   },
