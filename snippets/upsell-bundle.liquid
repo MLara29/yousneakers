@@ -1,0 +1,153 @@
+{%- assign upsell_enabled = section.settings.upsell_enable -%}
+{%- if upsell_enabled == blank or upsell_enabled -%}
+{%- assign p1_handle = section.settings.upsell_product_1.handle | default: section.settings.upsell_product_1 -%}
+{%- assign p1 = all_products[p1_handle] | default: product -%}
+{%- if section.settings.upsell_product_2 -%}
+  {%- assign p2_handle = section.settings.upsell_product_2.handle | default: section.settings.upsell_product_2 -%}
+  {%- assign p2 = all_products[p2_handle] -%}
+{%- else -%}
+  {%- assign primary_collection = p1.collections | first -%}
+  {%- assign candidate_collection = collection -%}
+  {%- unless candidate_collection -%}
+    {%- assign candidate_collection = product.collections | first -%}
+  {%- endunless -%}
+  {%- if candidate_collection and primary_collection and candidate_collection.handle == primary_collection.handle -%}
+    {%- assign candidate_collection = collections['all'] -%}
+  {%- endif -%}
+  {%- unless candidate_collection -%}
+    {%- assign candidate_collection = collections['all'] -%}
+  {%- endunless -%}
+
+  {%- assign primary_product_handles = '' -%}
+  {%- if primary_collection -%}
+    {%- for _p in primary_collection.products -%}
+      {%- assign primary_product_handles = primary_product_handles | append: _p.handle | append: ',' -%}
+    {%- endfor -%}
+  {%- endif -%}
+
+  {%- assign total = candidate_collection.products_count | default: 0 -%}
+  {%- assign seed = product.id | modulo: total -%}
+  {%- assign idx = 0 -%}
+  {%- assign p2 = '' -%}
+  {%- for pr in candidate_collection.products -%}
+    {%- assign in_primary = false -%}
+    {%- if primary_collection -%}
+      {%- if primary_product_handles contains pr.handle -%}
+        {%- assign in_primary = true -%}
+      {%- endif -%}
+    {%- endif -%}
+    {%- if pr.handle != p1.handle and in_primary == false -%}
+      {%- if idx == seed -%}
+        {%- assign p2 = pr -%}
+        {%- break -%}
+      {%- endif -%}
+      {%- assign idx = idx | plus: 1 -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- if p2 == '' -%}
+    {%- for pr in candidate_collection.products -%}
+      {%- assign in_primary = false -%}
+      {%- if primary_collection -%}
+        {%- if primary_product_handles contains pr.handle -%}
+          {%- assign in_primary = true -%}
+        {%- endif -%}
+      {%- endif -%}
+      {%- if pr.handle != p1.handle and in_primary == false -%}
+        {%- assign p2 = pr -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endif -%}
+{%- assign v1 = p1.selected_or_first_available_variant -%}
+{%- assign v2 = p2.selected_or_first_available_variant -%}
+{%- assign base_total = v1.price | plus: v2.price -%}
+{%- assign p1_title_down = p1.title | downcase -%}
+{%- assign is_af1 = false -%}
+{%- if p1_title_down contains 'air force 1' or p1.handle contains 'air-force-1' -%}
+  {%- assign is_af1 = true -%}
+{%- endif -%}
+{%- assign discounted_total = base_total -%}
+{%- if is_af1 -%}
+  {%- assign half_v2 = v2.price | times: 50 | divided_by: 100 -%}
+  {%- assign discounted_total = v1.price | plus: half_v2 -%}
+{%- endif -%}
+{%- assign discount_amount = base_total | minus: discounted_total -%}
+{%- assign discount_percent = discount_amount | times: 100 | divided_by: base_total | round -%}
+<div class="card" style="margin-top:16px">
+  <div class="card__header">
+    <h2 class="card__title heading h3">{{ section.settings.upsell_title | default: 'O Match Perfeito!' }}</h2>
+  </div>
+  <div class="card__section">
+    <div style="background:#fff;border:none;border-radius:10px;padding:10px">
+      <div style="display:flex;gap:10px;align-items:center;justify-content:center">
+        <div style="flex:0 0 auto;width:130px;height:130px;background:#fff;border:1px solid #e5e5e5;border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden">
+          <img src="{{ p1.featured_image | img_url: '240x' }}" alt="{{ p1.title | escape }}" style="max-width:100%;max-height:100%">
+        </div>
+        <div style="flex:0 0 auto;font-weight:bold;color: {{ settings.accent_color }};font-size:18px;line-height:1">+</div>
+        <div style="flex:0 0 auto;width:130px;height:130px;background:#fff;border:1px solid #e5e5e5;border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden">
+          <img src="{{ p2.featured_image | img_url: '240x' }}" alt="{{ p2.title | escape }}" style="max-width:100%;max-height:100%">
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:8px;font-size:13px;color:#333;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p1.title }} + {{ p2.title }}</div>
+    <div style="margin-top:10px;display:flex;align-items:center;gap:10px">
+      <div class="price-list" style="font-size:13px;margin:0;flex:0 0 auto;line-height:1.2;display:flex;flex-direction:column">
+        <div style="display:flex;align-items:center;gap:6px">
+          <span style="font-size:12px;color:#e53935;display:inline-block;text-decoration:line-through;text-decoration-thickness:1px;text-decoration-color:#e53935;text-decoration-skip-ink:none">{{ base_total | money_without_trailing_zeros }}</span>
+          {%- if discount_amount > 0 -%}
+          <span class="discount__percentage" style="display:inline-flex;align-items:center;gap:4px">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-down" width="1.1em" height="1.1em" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="18" y1="13" x2="12" y2="19"></line>
+              <line x1="6" y1="13" x2="12" y2="19"></line>
+            </svg>
+            {{ discount_percent }}%
+          </span>
+          {%- endif -%}
+        </div>
+        <span class="price price--highlight" style="font-size:14px;color:{{ settings.accent_color }};font-weight:700">{{ discounted_total | money_without_trailing_zeros }}</span>
+      </div>
+      <div style="flex:1 1 auto">
+        {%- if v1.available and v2.available -%}
+        <button id="upsell-add-bundle-{{ section.id }}" class="button button--primary" style="width:100%;height:46px;font-size:14px;display:flex;align-items:center;justify-content:center;line-height:1">{{ section.settings.upsell_button_text | default: 'COMPRAR OS 2 PRODUTOS' }}</button>
+        {%- else -%}
+        <button class="button button--disabled" disabled style="width:100%;height:46px;font-size:14px;display:flex;align-items:center;justify-content:center;line-height:1">Indisponível</button>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  (function(){
+    var btn = document.getElementById('upsell-add-bundle-{{ section.id }}');
+    if(!btn) return;
+    var adding=false;
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+      if(adding) return;
+      adding=true;
+      btn.disabled=true;
+      var originalText=btn.textContent;
+      btn.textContent='Adicionando...';
+      var items=[{ id: {{ v1.id }}, quantity: 1 },{ id: {{ v2.id }}, quantity: 1 }];
+      var headers={ 'Content-Type': 'application/json', 'Accept': 'application/json' };
+      fetch('/cart/add.js',{ method:'POST', headers:headers, body: JSON.stringify({ items: items }) })
+      .then(function(r){ if(!r.ok) throw new Error('bulk'); return r.json(); })
+      .catch(function(){
+        return fetch('/cart/add.js',{ method:'POST', headers:headers, body: JSON.stringify({ id: items[0].id, quantity: items[0].quantity }) })
+          .then(function(r){ if(!r.ok) throw new Error('first'); return r.json(); })
+          .then(function(){ return fetch('/cart/add.js',{ method:'POST', headers:headers, body: JSON.stringify({ id: items[1].id, quantity: items[1].quantity }) }); })
+          .then(function(r){ if(!r.ok) throw new Error('second'); return r.json(); });
+      })
+      .then(function(){
+        try{ document.dispatchEvent(new CustomEvent('cart:refresh')); }catch(_e){}
+        var mini=document.querySelector('.mini-cart');
+        if(mini){ mini.classList.add('is-open'); }
+      })
+      .finally(function(){ adding=false; btn.disabled=false; btn.textContent=originalText; });
+    });
+  })();
+</script>
+{%- endif -%}

@@ -771,6 +771,39 @@
       "info": "Refund policy must be added into your store policies. [Learn more](https://help.shopify.com/manual/sell-online/checkout-settings/refund-privacy-tos).",
       "default": true
     }
+    ,
+    {
+      "type": "header",
+      "content": "Upsell Bundle"
+    },
+    {
+      "type": "checkbox",
+      "id": "upsell_enable",
+      "label": "Ativar upsell de 2 produtos",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "upsell_title",
+      "label": "Título do upsell",
+      "default": "O Match Perfeito!"
+    },
+    {
+      "type": "text",
+      "id": "upsell_button_text",
+      "label": "Texto do botão",
+      "default": "COMPRAR OS 2 PRODUTOS"
+    },
+    {
+      "type": "product",
+      "id": "upsell_product_1",
+      "label": "Produto 1 do upsell"
+    },
+    {
+      "type": "product",
+      "id": "upsell_product_2",
+      "label": "Produto 2 do upsell"
+    }
   ]
 }
 {% endschema %}

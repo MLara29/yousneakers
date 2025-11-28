@@ -599,6 +599,7 @@
           <a href="mailto:{{ shop.email }}" class="button button--primary">{{ 'product.form.contact_us' | t }}</a>
         {%- endif -%}
       </div>
+      {%- render 'upsell-bundle' -%}
     {%- endform -%}
 
     {% render "simulador-cep" %}
