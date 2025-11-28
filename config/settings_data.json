@@ -411,7 +411,12 @@
           "show_payment_icons": false,
           "show_shipping_estimator": false,
           "shipping_estimator_default_country": "",
-          "show_refunds_policy": false
+          "show_refunds_policy": false,
+          "upsell_enable": true,
+          "upsell_title": "O Match Perfeito!",
+          "upsell_button_text": "COMPRAR OS 2 PRODUTOS",
+          "upsell_product_1": "",
+          "upsell_product_2": "tenis-air-force-1"
         }
       },
       "product-recommendations": {
