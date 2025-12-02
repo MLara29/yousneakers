@@ -192,16 +192,16 @@
           "image_gKemNJ": {
             "type": "image",
             "settings": {
-              "image": "shopify://shop_images/NIke_air_force_1_2_6eb0e90b-df7b-48ba-b71d-21a702f028b5.png",
+              "image": "shopify://shop_images/NIke_air_force_1_3_6ec59a50-757e-4900-87c3-20560baf6708.png",
               "mobile_image": "shopify://shop_images/dreamina-2025-12-01-1330-faca_um_desse_aqui_em_um_banner_de_1800_....jpg",
               "show_overlay": false,
               "overlay_opacity": 0,
               "text_color": "#ffffff",
               "title": "",
               "content": "",
-              "content_position": "bottom_right",
-              "button_background": "#807d7d",
-              "button_text_color": "#000000",
+              "content_position": "top_right",
+              "button_background": "#ffffff",
+              "button_text_color": "#ffffff",
               "button_text": "",
               "link": "https://chat.whatsapp.com/Czz1xBiWGiSDZRxzGEsDKh?mode=hqrt1"
             }
