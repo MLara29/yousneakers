@@ -969,6 +969,7 @@
           "review_rtVFaX",
           "review_LrU8XN"
         ],
+        "disabled": true,
         "name": "Seção de reviews",
         "settings": {
           "title": ""
