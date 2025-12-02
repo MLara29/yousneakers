@@ -8,9 +8,9 @@
       <div class="card" style="flex:1 1 30%;min-width:260px">
         <div class="card__section" style="text-align:center">
           {% if block.settings.avatar %}
-          <img src="{{ block.settings.avatar | img_url: '220x' }}" alt="{{ block.settings.username | escape }}" style="width:96px;height:96px;border-radius:50%;object-fit:cover;display:inline-block">
+          <img src="{{ block.settings.avatar | img_url: '220x' }}" alt="{{ block.settings.username | escape }}" style="width:96px;height:96px;border-radius:50%;object-fit:cover;display:block;margin:0 auto">
           {% endif %}
-          <div style="margin-top:8px;display:inline-flex;align-items:center;gap:6px;justify-content:center">
+          <div style="margin-top:8px;display:flex;align-items:center;gap:6px;justify-content:center;width:100%">
             <span style="color:#ffcc00;font-size:14px">★</span>
             <span style="font-weight:600">@{{ block.settings.username | replace: '@','' }}</span>
           </div>
