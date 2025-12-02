@@ -194,8 +194,8 @@
             "settings": {
               "image": "shopify://shop_images/NIke_air_force_1_2_6eb0e90b-df7b-48ba-b71d-21a702f028b5.png",
               "mobile_image": "shopify://shop_images/dreamina-2025-12-01-1330-faca_um_desse_aqui_em_um_banner_de_1800_....jpg",
-              "show_overlay": true,
-              "overlay_opacity": 100,
+              "show_overlay": false,
+              "overlay_opacity": 0,
               "text_color": "#ffffff",
               "title": "",
               "content": "",
