@@ -8,10 +8,12 @@
       <div class="card" style="flex:1 1 30%;min-width:260px">
         <div class="card__section" style="text-align:center">
           {% if block.settings.avatar %}
-          <img src="{{ block.settings.avatar | img_url: '160x' }}" alt="{{ block.settings.username | escape }}" style="width:72px;height:72px;border-radius:50%;object-fit:cover;display:inline-block">
+          <img src="{{ block.settings.avatar | img_url: '220x' }}" alt="{{ block.settings.username | escape }}" style="width:96px;height:96px;border-radius:50%;object-fit:cover;display:inline-block">
           {% endif %}
-          <div style="margin-top:6px;color:#ffcc00;font-size:14px">★</div>
-          <div style="margin-top:4px;font-weight:600">@{{ block.settings.username | replace: '@','' }}</div>
+          <div style="margin-top:8px;display:inline-flex;align-items:center;gap:6px;justify-content:center">
+            <span style="color:#ffcc00;font-size:14px">★</span>
+            <span style="font-weight:600">@{{ block.settings.username | replace: '@','' }}</span>
+          </div>
           <p style="margin-top:8px">{{ block.settings.text }}</p>
         </div>
       </div>
