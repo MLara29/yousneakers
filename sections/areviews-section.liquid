@@ -1,11 +1,45 @@
-<div id='Areviewsapp' class='page-full'>{%  render 'aliexpress_reviews' , product: product %}</div>
+<section data-section-id="{{ section.id }}" data-section-type="customer-reviews">
+  <div class="container">
+    <div class="card__header">
+      <h2 class="card__title heading h3">{{ section.settings.title }}</h2>
+    </div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap">
+      {% for block in section.blocks %}
+      <div class="card" style="flex:1 1 30%;min-width:260px">
+        <div class="card__section" style="text-align:center">
+          {% if block.settings.avatar %}
+          <img src="{{ block.settings.avatar | img_url: '160x' }}" alt="{{ block.settings.username | escape }}" style="width:72px;height:72px;border-radius:50%;object-fit:cover;display:inline-block">
+          {% endif %}
+          <div style="margin-top:6px;color:#ffcc00;font-size:14px">★</div>
+          <div style="margin-top:4px;font-weight:600">@{{ block.settings.username | replace: '@','' }}</div>
+          <p style="margin-top:8px">{{ block.settings.text }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
 
-	{% schema %}
-	 {
-	    "name": "areviews section",
-
-	    "presets": [{
-	      "name": "areviews section"
-	    }]
-	  }
-	{% endschema %}
+{% schema %}
+{
+  "name": "Depoimentos de clientes",
+  "settings": [
+    {"type": "text", "id": "title", "label": "Título", "default": "Depoimentos"}
+  ],
+  "max_blocks": 3,
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {"type": "image_picker", "id": "avatar", "label": "Foto do perfil"},
+        {"type": "text", "id": "username", "label": "Perfil (@)", "default": "@cliente"},
+        {"type": "textarea", "id": "text", "label": "Texto do review", "default": "Seu depoimento aqui"}
+      ]
+    }
+  ],
+  "presets": [
+    {"name": "Seção de reviews"}
+  ]
+}
+{% endschema %}
