@@ -717,6 +717,7 @@
         "blocks": {
           "item_D8Dqx4": {
             "type": "item",
+            "disabled": true,
             "settings": {
               "image": "shopify://shop_images/Design_sem_nome_88.png",
               "show_overlay": false,
@@ -736,6 +737,7 @@
           },
           "item_KL3Rwg": {
             "type": "item",
+            "disabled": true,
             "settings": {
               "image": "shopify://shop_images/Design_sem_nome_92.png",
               "show_overlay": false,
@@ -755,6 +757,7 @@
           },
           "item_Cpd9Mn": {
             "type": "item",
+            "disabled": true,
             "settings": {
               "image": "shopify://shop_images/Design_sem_nome_95.png",
               "show_overlay": false,
